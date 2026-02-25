@@ -20,12 +20,8 @@ def generate_launch_description():
     mock_sensor_commands = LaunchConfiguration("mock_sensor_commands")
     slowdown = LaunchConfiguration("slowdown")
 
-    pkg_share = FindPackageShare('fake_hw_interface').find('fake_hw_interface')
+    pkg_share = FindPackageShare('perception_bringup').find('perception_bringup')
     xacro_file = os.path.join(pkg_share, 'urdf', 'fake_robot.urdf.xacro')
-    controllers_yaml = os.path.join(pkg_share, 'config', 'fake_hw_params.yaml')
-
-    # xacro_file = PathJoinSubstitution([pkg_share, 'urdf', 'fake_robot.urdf.xacro'])
-    # controllers_yaml = PathJoinSubstitution([pkg_share, 'config', 'fake_hw_params.yaml'])
 
     # xacro 动态生成 robot_description
     robot_description_content = Command([
@@ -46,7 +42,7 @@ def generate_launch_description():
 
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("perception_controller"),
+            FindPackageShare("perception_bringup"),
             "config",
             "test_mock_camera_controller.yaml",
         ]
@@ -79,21 +75,20 @@ def generate_launch_description():
         parameters=[robot_description]
     )
 
-    test_mock_camera_controller_spawner = Node(
+    perception_system_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["test_mock_many_cameras_controller", "--controller-manager", "/controller_manager"],
+        arguments=["perception_system_controller", "--controller-manager", "/controller_manager"],
     )
 
-    test_t265_front_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["test_t265_camera_controller", "--controller-manager", "/controller_manager"],
-    )
+    # test_t265_front_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["test_t265_camera_controller", "--controller-manager", "/controller_manager"],
+    # )
 
     ld = LaunchDescription(declared_arguments + [control_node, 
     robot_state_pub_node, 
-    test_mock_camera_controller_spawner, 
-    test_t265_front_controller_spawner])
+    perception_system_controller_spawner])
     return ld
 
