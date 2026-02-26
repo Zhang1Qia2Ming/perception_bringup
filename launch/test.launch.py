@@ -62,6 +62,7 @@ def generate_launch_description():
         executable='ros2_control_node',
         parameters=[robot_controllers],
         output='screen',
+        arguments=['--ros-args', '--log-level', 'perception_system_controller:=debug'],
         remappings=[
             ("~/robot_description", "/robot_description"),
         ],
