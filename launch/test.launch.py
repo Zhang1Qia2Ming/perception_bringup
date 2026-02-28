@@ -21,7 +21,7 @@ def generate_launch_description():
     slowdown = LaunchConfiguration("slowdown")
 
     pkg_share = FindPackageShare('perception_bringup').find('perception_bringup')
-    xacro_file = os.path.join(pkg_share, 'urdf', 'fake_robot.urdf.xacro')
+    xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
 
     # xacro 动态生成 robot_description
     robot_description_content = Command([
