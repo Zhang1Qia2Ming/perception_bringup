@@ -22,6 +22,7 @@ def generate_launch_description():
 
     pkg_share = FindPackageShare('perception_bringup').find('perception_bringup')
     xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
+    rviz_config_file = PathJoinSubstitution([pkg_share, 'rviz', 'robot.rviz'])
 
     # xacro 动态生成 robot_description
     robot_description_content = Command([
@@ -88,8 +89,18 @@ def generate_launch_description():
     #     arguments=["test_t265_camera_controller", "--controller-manager", "/controller_manager"],
     # )
 
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        arguments=['-d', rviz_config_file],
+        output='screen'
+    )
+
     ld = LaunchDescription(declared_arguments + [control_node, 
     robot_state_pub_node, 
-    perception_system_controller_spawner])
+    perception_system_controller_spawner,
+    rviz_node,
+    ])
     return ld
 

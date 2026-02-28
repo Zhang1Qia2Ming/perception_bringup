@@ -19,4 +19,8 @@ install(DIRECTORY urdf
   DESTINATION share/${PROJECT_NAME}/
 )
 
+install(DIRECTORY rviz
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 ament_package()
