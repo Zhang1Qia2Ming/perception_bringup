@@ -7,6 +7,7 @@
       </hardware>
 
       <sensor name="${prefix}camera_front">
+        <!-- hw param -->
         <param name="device_type">mock_camera</param>
         <param name="video_device">/dev/video0</param>
         <param name="image_width">640</param>
@@ -17,6 +18,9 @@
         <param name="output_mode">screen</param>
         <param name="fx">500.0</param><param name="fy">500.0</param>
         <param name="cx">320.0</param><param name="cy">240.0</param>
+        <!-- classified -->
+
+        <!-- export api -->
         <state_interface name="data_ptr"/>
       </sensor>
 
@@ -27,6 +31,8 @@
         <param name="wait_for_device_timeout">-1.0</param>
         <param name="reconnect_timeout">6.0</param>
         <param name="initial_reset">true</param>
+
+        <param name="
         <state_interface name="data_ptr"/>
       </sensor>
     </ros2_control>
